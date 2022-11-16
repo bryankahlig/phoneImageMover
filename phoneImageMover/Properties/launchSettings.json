@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "phoneImageMover": {
+      "commandName": "Project",
+      "commandLineArgs": "-s \"D:\\\\Pictures\\From Maria's Phone\\\\Android\\\\Camera\""
+    }
+  }
+}
