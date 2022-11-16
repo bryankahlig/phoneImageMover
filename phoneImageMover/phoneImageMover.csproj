@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="ExifLib" Version="1.7.0" />
   </ItemGroup>
 
 </Project>
