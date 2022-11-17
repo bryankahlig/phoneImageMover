@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace phoneImageMover
 {
-    internal class Logger
+    public class Logger
     {
         private bool verbose;
 

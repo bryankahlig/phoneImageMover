@@ -16,11 +16,13 @@ namespace phoneImageMover
 
         private Options Options;
         private Logger Logger;
+        private FileNameOperations FileNameOperations;
 
         public void Run(Options options)
         {
             Logger = new Logger(options.Verbose);
             Options = options;
+            FileNameOperations = new FileNameOperations(Logger);
             Console.WriteLine($"Source Folder: {options.SourcePath}");
             Console.WriteLine($"Destination Folder: {options.DestinationPath}");
             var directories = Directory.EnumerateDirectories(Path.GetDirectoryName(options.SourcePath));
@@ -94,9 +96,9 @@ namespace phoneImageMover
             {
                 try
                 {
-                    var indexOfYearInFilename = getIndexOfYearInFilename(source);
+                    var indexOfYearInFilename = FileNameOperations.getIndexOfYearInFilename(source);
                     Logger.logVerbose($"Using filename for date for {source} with year index {indexOfYearInFilename}");
-                    destinationFilePath = buildDestinationPathByFilename(source, destinationRoot);
+                    destinationFilePath = FileNameOperations.buildDestinationPathByFilename(source, destinationRoot);
                 }
                 catch (InvalidDataException ide)
                 {
@@ -106,33 +108,9 @@ namespace phoneImageMover
             return destinationFilePath;
         }
 
-        private string buildDestinationPathByFilename(string fileToMove, string destinationPathRoot)
-        {
-            int indexOfYearInFilename = getIndexOfYearInFilename(fileToMove);
-            if (indexOfYearInFilename < 0) throw new InvalidDataException($"File {fileToMove} does not have a valid year index");
-            string fileYear = fileToMove.Substring(indexOfYearInFilename, 4);
-            string fileMonth = fileToMove.Substring(indexOfYearInFilename + 4, 2);
-            string destinationPath = destinationPathRoot + fileYear + "//" + fileMonth + "//";
-            Logger.logVerbose($"Destination path for file {fileToMove} is {destinationPath}");
-            return destinationPath;
-        }
-
         private bool ShouldSkipFile(string filename)
         {
-            return (filename.StartsWith(".") || filename.ToLower() == "thumbs.db" || getIndexOfYearInFilename(filename) == -1);
-        }
-
-        private int getIndexOfYearInFilename(string filename)
-        {
-            switch (filename.ToUpper().Substring(0, 3))
-            {
-                case "IMG": return 4;
-                case "PHO": return 6;
-                case "VID": return filename.IndexOf("_") + 1;
-                default:
-                    Logger.log("Unrecognized file format: " + filename);
-                    return -1;
-            }
+            return (filename.StartsWith(".") || filename.ToLower() == "thumbs.db" || FileNameOperations.getIndexOfYearInFilename(filename) == -1);
         }
 
         private string buildDestinationPathByExifData(string Path, string fileToMove, string baseDestinationPath)
@@ -167,13 +145,6 @@ namespace phoneImageMover
             }
         }
 
-        private DateTime GetDateForMp4Filename(string filename, int indexOfYearInFilename)
-        {
-            Logger.logVerbose("MP4 Path and Filename: " + filename);
-            Logger.logVerbose("MP4 Filename: " + Path.GetFileName(filename));
-            string strippedDate = Path.GetFileName(filename).Substring(indexOfYearInFilename, 7);
-            Logger.logVerbose("MP4 Stripped Date: " + strippedDate);
-            return DateTime.ParseExact(strippedDate, "yyyyMMDD", System.Globalization.CultureInfo.InvariantCulture);
-        }
+
     }
 }

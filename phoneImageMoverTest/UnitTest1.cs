@@ -1,0 +1,64 @@
+using phoneImageMover;
+
+namespace phoneImageMoverTest
+{
+    public class Tests
+    {
+        private Options options;
+        private Processor processor;
+        private Logger logger;
+        private FileNameOperations fileNameOperations;
+        
+        [SetUp]
+        public void Setup()
+        {
+            options = new Options();
+            processor = new Processor();
+            logger = new Logger(false);
+            fileNameOperations = new FileNameOperations(logger);
+        }
+
+        [Test]
+        public void TestIMGYearIndex()
+        {
+            int result = fileNameOperations.getIndexOfYearInFilename("IMG_20220201.png");
+            Assert.AreEqual(4, result);
+        }
+        
+        [Test]
+        public void TestPHOYearIndex()
+        {
+            int result = fileNameOperations.getIndexOfYearInFilename("PHO___20220201.png");
+            Assert.AreEqual(6, result);
+        }
+
+        [Test]
+        public void TestVIDYearIndex()
+        {
+            int result = fileNameOperations.getIndexOfYearInFilename("VID1111_20220201.png");
+            Assert.AreEqual(8, result);
+        }
+
+        [Test]
+        public void TestUnrecognizedYearIndex()
+        {
+            int result = fileNameOperations.getIndexOfYearInFilename("nope_20220201.png");
+            Assert.AreEqual(-1, result);
+        }
+
+        [Test]
+        public void TestFilename()
+        {
+            string result = fileNameOperations.buildDestinationPathByFilename("IMG_20220101.png", "C:\\root\\");
+            Assert.That(result, Is.EqualTo("C:\\root\\2022\\01\\"));
+        }
+
+        [Test]
+        public void TestMp4Filename()
+        {
+            DateTime dateTime = new DateTime(2022, 2, 1);
+            DateTime result = fileNameOperations.GetDateForMp4Filename("012345620220201.mp4", 7);
+            Assert.That(result, Is.EqualTo(dateTime));
+        }
+    }
+}
