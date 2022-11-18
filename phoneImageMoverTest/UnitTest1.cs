@@ -43,21 +43,21 @@ namespace phoneImageMoverTest
         public void TestUnrecognizedYearIndex()
         {
             int result = fileNameOperations.getIndexOfYearInFilename("nope_20220201.png");
-            Assert.AreEqual(-1, result);
+            Assert.AreEqual(5, result);
         }
 
         [Test]
         public void TestFilename()
         {
             string result = fileNameOperations.buildDestinationPathByFilename("IMG_20220101.png", "C:\\root\\");
-            Assert.That(result, Is.EqualTo("C:\\root\\2022\\01\\"));
+            Assert.That(result, Is.EqualTo("C:\\root\\2022\\01\\IMG_20220101.png"));
         }
 
         [Test]
         public void TestMp4Filename()
         {
             DateTime dateTime = new DateTime(2022, 2, 1);
-            DateTime result = fileNameOperations.GetDateForMp4Filename("012345620220201.mp4", 7);
+            DateTime result = fileNameOperations.GetDateForMp4Filename("0123456_20220201.mp4", 8);
             Assert.That(result, Is.EqualTo(dateTime));
         }
     }

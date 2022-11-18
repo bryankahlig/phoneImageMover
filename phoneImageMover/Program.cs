@@ -18,6 +18,5 @@ partial class Program
 
     static void HandleParseError(IEnumerable<Error> errs)
     {
-        Console.WriteLine("Errors!!!");
     }
 }

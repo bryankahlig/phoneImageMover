@@ -2,7 +2,7 @@
   "profiles": {
     "phoneImageMover": {
       "commandName": "Project",
-      "commandLineArgs": "-s \"D:\\Pictures\\From Maria's Phone\\Android\\Camera\""
+      "commandLineArgs": "-s \"D:\\Pictures\\From Bryan Phone\\Camera\\Camera\"\r\n-l"
     }
   }
 }

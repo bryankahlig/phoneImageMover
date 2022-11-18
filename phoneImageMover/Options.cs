@@ -7,8 +7,8 @@ namespace phoneImageMover
         [Option('v', "verbose", Required = false, HelpText = "See all the output")]
         public bool Verbose { get; set; }
 
-        [Option('t', "testrun", Default = true, Required = false, HelpText = "Run in test mode. Default is true. No modifications are made when true.")]
-        public bool Testrun { get; set; }
+        [Option('l', "livemode", Default = false, Required = false, HelpText = "Run in test mode. Default is true. No modifications are made when true.")]
+        public bool LiveMode { get; set; }
 
         [Option('s', "sourcePath", Required = true, HelpText = "The path to the source of the files.")]
         public string? SourcePath { get; set; }
