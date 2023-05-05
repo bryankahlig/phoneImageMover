@@ -5,7 +5,16 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "phoneImageMover", "phoneImageMover\phoneImageMover.csproj", "{60B3BC38-1003-4FEC-8585-07C53023AB70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "phoneImageMoverTest", "phoneImageMoverTest\phoneImageMoverTest.csproj", "{D7875E41-3702-4635-96EC-8042D7E647DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "phoneImageMoverTest", "phoneImageMoverTest\phoneImageMoverTest.csproj", "{D7875E41-3702-4635-96EC-8042D7E647DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{697C86E0-045E-4C69-89C3-9FB39ED584EC}"
+	ProjectSection(SolutionItems) = preProject
+		copyBryanPhoneFilesLive.ps1 = copyBryanPhoneFilesLive.ps1
+		copyBryanPhoneFilesTest.ps1 = copyBryanPhoneFilesTest.ps1
+		copyMariaPhoneFilesLive.ps1 = copyMariaPhoneFilesLive.ps1
+		copyMariaPhoneFIlesTest.ps1 = copyMariaPhoneFIlesTest.ps1
+		copyReleaseToBin.ps1 = copyReleaseToBin.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

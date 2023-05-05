@@ -25,6 +25,7 @@ namespace phoneImageMover
             FileNameOperations = new FileNameOperations(Logger);
             Console.WriteLine($"Source Folder: {options.SourcePath}");
             Console.WriteLine($"Destination Folder: {options.DestinationPath}");
+            ProcessFilesInFolder(options.SourcePath, options.DestinationPath);
             var directories = Directory.EnumerateDirectories(Path.GetDirectoryName(options.SourcePath));
             foreach (var directory in directories)
             {
@@ -122,7 +123,10 @@ namespace phoneImageMover
         private bool ShouldSkipFile(string pathAndFilename)
         {
             var filename = Path.GetFileName(pathAndFilename);
-            return (filename.StartsWith(".") || filename.ToLower() == "thumbs.db" || FileNameOperations.getIndexOfYearInFilename(filename) == -1);
+            return (filename.StartsWith(".")
+                || filename.StartsWith("~")
+                || filename.ToLower() == "thumbs.db"
+                || FileNameOperations.getIndexOfYearInFilename(filename) == -1);
         }
 
         private string buildDestinationPathByExifData(string sourcePathAndFilename, string baseDestinationPath)
@@ -145,13 +149,20 @@ namespace phoneImageMover
 
         private DateTime GetExifDateForJpeg(string sourcePathAndFilename)
         {
-            using (ExifReader reader = new ExifReader(sourcePathAndFilename))
+            try
             {
-                DateTime dtOfPicture;
-                if (reader.GetTagValue<DateTime>(ExifTags.DateTimeDigitized, out dtOfPicture))
+                using (ExifReader reader = new ExifReader(sourcePathAndFilename))
                 {
-                    return dtOfPicture;
+                        DateTime dtOfPicture;
+                        if (reader.GetTagValue<DateTime>(ExifTags.DateTimeDigitized, out dtOfPicture))
+                        {
+                            return dtOfPicture;
+                        }
+                        return DateTime.MinValue;
                 }
+            }
+            catch (Exception ex)
+            {
                 return DateTime.MinValue;
             }
         }

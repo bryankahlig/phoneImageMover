@@ -1,0 +1,1 @@
+.\phoneImageMover.exe -s "D:\Pictures\From Bryan Phone\Camera" -l
