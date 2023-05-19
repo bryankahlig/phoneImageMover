@@ -132,7 +132,7 @@ namespace phoneImageMover
         private string buildDestinationPathByExifData(string sourcePathAndFilename, string baseDestinationPath)
         {
             DateTime fileDate = DateTime.MinValue;
-            Logger.logVerbose("fileDate init: " + fileDate.ToShortDateString());
+            Logger.logVerbose("FileDate init: " + fileDate.ToShortDateString());
             if (sourcePathAndFilename.ToLower().EndsWith("jpg") || sourcePathAndFilename.ToLower().EndsWith("jpeg"))
             {
                 fileDate = GetExifDateForJpeg(sourcePathAndFilename);

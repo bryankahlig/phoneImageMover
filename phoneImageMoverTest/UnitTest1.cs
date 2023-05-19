@@ -22,28 +22,28 @@ namespace phoneImageMoverTest
         public void TestIMGYearIndex()
         {
             int result = fileNameOperations.getIndexOfYearInFilename("IMG_20220201.png");
-            Assert.AreEqual(4, result);
+            Assert.That(result, Is.EqualTo(4));
         }
         
         [Test]
         public void TestPHOYearIndex()
         {
             int result = fileNameOperations.getIndexOfYearInFilename("PHO___20220201.png");
-            Assert.AreEqual(6, result);
+            Assert.That(result, Is.EqualTo(6));
         }
 
         [Test]
         public void TestVIDYearIndex()
         {
             int result = fileNameOperations.getIndexOfYearInFilename("VID1111_20220201.png");
-            Assert.AreEqual(8, result);
+            Assert.That(result, Is.EqualTo(8));
         }
 
         [Test]
         public void TestUnrecognizedYearIndex()
         {
             int result = fileNameOperations.getIndexOfYearInFilename("nope_20220201.png");
-            Assert.AreEqual(5, result);
+            Assert.That(result, Is.EqualTo(5));
         }
 
         [Test]

@@ -1,1 +1,1 @@
-.\phoneImageMover.exe -s "D:\Pictures\From Maria's Phone\Android\Camera" -l
+.\phoneImageMover.exe -s "D:\Pictures\From Maria's Phone\Android\Camera\\" -l
