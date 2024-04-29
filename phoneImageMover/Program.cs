@@ -18,5 +18,9 @@ partial class Program
 
     static void HandleParseError(IEnumerable<Error> errs)
     {
+        foreach (var err in errs)
+        {
+            Console.WriteLine(err.ToString());
+        }
     }
 }
