@@ -2,7 +2,7 @@
   "profiles": {
     "phoneImageMover": {
       "commandName": "Project",
-      "commandLineArgs": "-s \"D:\\Pictures\\From Maria's Phone\\Android\\Camera\\\\\"\r\n-v -l"
+      "commandLineArgs": "-s \"C:\\Users\\bryan\\Downloads\\Maria Google Photos files\\extracted\\\\\"\r\n-v -l"
     }
   }
 }

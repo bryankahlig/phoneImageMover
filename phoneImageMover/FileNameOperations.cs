@@ -10,10 +10,12 @@ namespace phoneImageMover
     public class FileNameOperations
     {
         private Logger logger;
+        private IFilenameValidator filenameValidator;
 
         public FileNameOperations(Logger l)
         {
             this.logger = l;
+            this.filenameValidator = new FilenameValidator();
         }
 
         public string buildDestinationPathByFilename(string fileToMove, string destinationPathRoot)
@@ -22,6 +24,8 @@ namespace phoneImageMover
             if (indexOfYearInFilename < 0) throw new InvalidDataException($"File {fileToMove} does not have a valid year index");
             string fileYear = fileToMove.Substring(indexOfYearInFilename, 4);
             string fileMonth = fileToMove.Substring(indexOfYearInFilename + 4, 2);
+            if (!filenameValidator.IsValidFilenameYear(fileYear)) throw new InvalidDataException($"File {fileToMove} has an invalid year: {fileYear}");
+            if (!filenameValidator.IsValidFilenameMonth(fileMonth)) throw new InvalidDataException($"File {fileToMove} has an invalid month: {fileMonth}");
             string destinationPath = destinationPathRoot + fileYear + "\\" + fileMonth + "\\" + Path.GetFileName(fileToMove);
             logger.logVerbose($"Destination path for file {fileToMove} is {destinationPath}");
             return destinationPath;

@@ -8,6 +8,7 @@ namespace phoneImageMoverTest
         private Processor processor;
         private Logger logger;
         private FileNameOperations fileNameOperations;
+        private IFilenameValidator filenameValidator;
         
         [SetUp]
         public void Setup()
@@ -16,6 +17,7 @@ namespace phoneImageMoverTest
             processor = new Processor();
             logger = new Logger(false);
             fileNameOperations = new FileNameOperations(logger);
+            filenameValidator = new FilenameValidator();
         }
 
         [Test]
@@ -59,6 +61,45 @@ namespace phoneImageMoverTest
             DateTime dateTime = new DateTime(2022, 2, 1);
             DateTime result = fileNameOperations.GetDateForMp4Filename("0123456_20220201.mp4", 8);
             Assert.That(result, Is.EqualTo(dateTime));
+        }
+
+        [Test]
+        public void TestYearValidity()
+        {
+            void TestYear(string year, bool expected)
+            {
+                bool result = filenameValidator.IsValidFilenameYear(year);
+                Assert.That(result, Is.EqualTo(expected));
+            }
+
+            TestYear("2022", true);
+            TestYear("2023", true);
+            TestYear("1923", true);
+            TestYear("1800", false);
+            TestYear("fred", false);
+            TestYear("202", false);
+            TestYear("20222", false);
+            TestYear(".2134jsl", false);
+        }
+
+        // Test month validity
+        [Test]
+        public void TestMonthValidity()
+        {
+            void TestMonth(string month, bool expected)
+            {
+                bool result = filenameValidator.IsValidFilenameMonth(month);
+                Assert.That(result, Is.EqualTo(expected));
+            }
+
+            TestMonth("01", true);
+            TestMonth("12", true);
+            TestMonth("00", false);
+            TestMonth("13", false);
+            TestMonth("1", false);
+            TestMonth("1a", false);
+            TestMonth("1.0", false);
+            TestMonth("j.0", false);
         }
     }
 }

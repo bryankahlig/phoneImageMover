@@ -82,7 +82,16 @@ namespace phoneImageMover
                     {
                         Logger.logVerbose($"Moving {sourcePathAndFilename} to {destination}");
                         Directory.CreateDirectory(Path.GetDirectoryName(destinationFilePath));
-                        File.Move(sourcePathAndFilename, destination);
+                        // if file already exists, remove the source file and don't delete the destination file, otherwise move the file
+                        if (File.Exists(destination))
+                        {
+                            Logger.log($"File already exists at {destination}. Removing source file {sourcePathAndFilename}");
+                            File.Delete(sourcePathAndFilename);
+                        }
+                        else
+                        {
+                            File.Move(sourcePathAndFilename, destination);
+                        }
                     }
                 } catch (Exception ex)
                 {
@@ -122,6 +131,11 @@ namespace phoneImageMover
 
         private bool ShouldSkipFile(string pathAndFilename)
         {
+            var extension = Path.GetExtension(pathAndFilename);
+            if (!Options.Extensions.Contains(extension.ToLowerInvariant()))
+            {
+                return true;
+            }
             var filename = Path.GetFileName(pathAndFilename);
             return (filename.StartsWith(".")
                 || filename.StartsWith("~")
